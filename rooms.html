@@ -36,6 +36,15 @@
         color:#22c55e;
       }
     </style>
-    <script src="script.js"></script>    
+    <script src="script.js"></script>
+    <script>
+      let guestName = localStorage.getItem("chatww_username");
+
+if (!guestName) {
+  guestName = "Guest_" + Math.floor(Math.random() * 10000);
+  localStorage.setItem("chatww_username", guestName);
+}
+
+    </script>
 </body>
 </html>
