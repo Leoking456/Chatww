@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Chatww</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+    <!-- Basic Icons -->
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style2.css">
+
+  </head>
+  <body>
+    <header>
+      <h1>Chat World Wide</h1>
+      <div id="userName">Connecting...</div>
+      <a id="home" href="index.html">
+        <i class="bx bx-home"></i>
+      </a>
+    </header>
+    
+    <nav>
+      <ul class="nav">
+        <li>
+          <a id="li1"href="public.html">Public chat</a>
+        </li>
+      </ul>
+    </nav>
+    
+    <div id="messages"></div>
+    
+    <div id="sendBox">
+      <input id="messageInput" placeholder="Type a message"/>
+      <button title="Send your message" onclick="sendMessage()">
+        <i class="bx bx-send"></i>
+      </button>
+      <button title="clear the whole chat" id="clear" onclick="clearChat()">Clear Chat</button>
+    </div>
+    
+    <script src="script1.js"></script>    
+</body>
+</html>
