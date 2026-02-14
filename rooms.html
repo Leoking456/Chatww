@@ -3,48 +3,65 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
     <title>Chatww</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <!-- Basic Icons -->
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style2.css">
+
   </head>
   <body>
     <header>
       <h1>Chat World Wide</h1>
-      <div id="userName">Connecting...</div>
-      <div id="msgTopBar"></div>
+      <a id="home" href="index.html">
+        <i class="bx bx-home"></i>
+      </a>
     </header>
     
     <nav>
       <ul class="nav">
-        <li><a id="li1"href="index.html">Public</a></li>
-        <li><a id="li2"href="rooms.html">Rooms</a></li>
+        <li>
+          <a id="li1"href="#.html">Private Rooms</a>
+        </li>
       </ul>
     </nav>
     
-    <!--
+
+
+  <!-- Create room -->
+  <div id="createRoomBox">
+    <input id="roomName" placeholder="Room name">
+    <input id="roomPass" placeholder="Password" type="password">
+    <button onclick="createRoom()">Create Room</button>
+  </div>
+
+  <!-- Room list -->
+  <div id="roomList"></div>
+  
+  <!-- Join existing room -->
+<div id="joinRoomBox">
+  <input id="joinRoomName" placeholder="Room name">
+  <input id="joinRoomPass" placeholder="Password" type="password">
+  <button onclick="joinExistingRoom()">Join Room</button>
+</div>
+
+
+  <!-- Chat (hidden first) -->
+  <div id="chatPage" style="display:none;">
     <div id="messages"></div>
-    
-    <div id="sendBox">
-      <input id="messageInput" placeholder="Type a message"/>
-      <button onclick="sendMessage()">Send</button>
-      <button id="clear" onclick="clearChat()">Clear Chat</button>
-    </div>
-    -->
-    <style>
-      #li2{
-        color:#22c55e;
-      }
-    </style>
-    <script src="script.js"></script>
-    <script>
-      let guestName = localStorage.getItem("chatww_username");
 
-if (!guestName) {
-  guestName = "Guest_" + Math.floor(Math.random() * 10000);
-  localStorage.setItem("chatww_username", guestName);
-}
+    <input id="messageInput" placeholder="Type message">
+    <button onclick="sendMessage()">Send</button>
 
-    </script>
+    <button onclick="leaveRoom()">Leave</button>
+  </div>
+
+
+    <script src="script2.js"></script>    
 </body>
 </html>
