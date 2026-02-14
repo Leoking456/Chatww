@@ -12,11 +12,22 @@ header {
   padding: 10px;
   background: #020617;
   text-align: left;
-  height: 5em;
+  position:relative;
 }
 
 header h1 {
   font-size: 1.5rem;
+}
+
+#home {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  text-decoration: none;
+  font-size: 1.5rem;
+  color: #22c55e;
+  transition: transform 0.2s, color 0.2s;
 }
 
 #messages {
@@ -98,6 +109,7 @@ nav {
   color: white;
   font-weight: 700;
   transition: 0.25s ease;
+  color:#22c55e;
 }
 
 .nav li a:hover {
