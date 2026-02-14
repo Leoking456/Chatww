@@ -45,7 +45,9 @@ function sendMessage() {
   input.value = "";
 }
 
-// key
+
+
+// keys
 document.getElementById("messageInput").addEventListener("keydown", e => {
   if (e.key === "Enter") {
     e.preventDefault();
@@ -59,6 +61,13 @@ document.getElementById("messageInput").addEventListener("keydown", e => {
   }
 });
 
+document.addEventListener("keydown", e => {
+  if (e.key === "/") {
+    e.preventDefault(); 
+    document.getElementById("messageInput").focus();
+  }
+});
+
 // Clear chat
 function clearChat() {
   if (!confirm("Clear all messages?")) return;
@@ -68,14 +77,11 @@ function clearChat() {
 
 // Check if username already exists on this device
 let guestName = localStorage.getItem("chatww_username");
-
 if (!guestName) {
   // Create a new one if not found
   guestName = "Guest_" + Math.floor(Math.random() * 10000);
-
   // Save it permanently on this device
   localStorage.setItem("chatww_username", guestName);
 }
-
 // Display username
 document.getElementById("userName").innerText = "You are " + guestName;
