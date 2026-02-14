@@ -2,39 +2,100 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" sizes="32x32" />
-    <link rel="icon" type="image/png" herf="./cww-logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="icon" type="image/png" herf="cww-logo.png">
+    
     <title>Chatww</title>
+    
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <header>
-      <h1>Chat World Wide</h1>
-      <div id="userName">Connecting...</div>
-      <div id="msgTopBar"></div>
-    </header>
-    
-    <nav>
-      <ul class="nav">
-        <li><a id="li1"href="index.html">Public</a></li>
-        <li><a id="li2"href="rooms.html">Rooms</a></li>
-      </ul>
-    </nav>
-    
-    <div id="messages"></div>
-    
-    <div id="sendBox">
-      <input id="messageInput" placeholder="Type a message"/>
-      <button onclick="sendMessage()">Send</button>
-      <button id="clear" onclick="clearChat()">Clear Chat</button>
-    </div>
     <style>
-      #li1{
-        color:#22c55e;
+      body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #0f172a, #1e293b);
+        color: white;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        margin:0px;
+      }
+      header {
+        padding: 10px;
+        background: #020617;
+        text-align: center;
+        height: 5em;
+      }
+      header h1 {
+        font-size: 1.7rem;
+      }
+      #allb{
+        flex:1;
+        display:flex;
+        justify-content: center; 
+        align-items: center; 
+      }
+      #allb a{
+        animation: fadeUp 0.6s ease;
+      }
+      #box{
+        width:60%;
+        max-width:400px;
+        padding:30px 40px;
+        border-radius:20px;
+        display:flex;
+        flex-direction:column;
+        text-align:center;
+        background:rgba(255, 255, 255, 0.05);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        animation: fadeIn 0.6s ease;
+      }
+      #box a{
+        text-decoration:none;
+        font-family:'Baloo 2', cursive;
+        letter-spacing:1px;
+        padding:10px 20px;
+        margin:6px;
+        border:solid;
+        border-radius:999px;
+        overflow:hidden;
+        position:relative;
+        border: 2px solid #22c55e;
+        color: #22c55e;
+        background:transparent;
+        box-shadow: 0 5px 20px ;
+      }
+      
+      #box a:hover{
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+        color: white;
+        box-shadow: 0 6px 20px rgba(34,197,94,0.4);
+        border: 2px solid white;
+        
+      }
+      @media (max-width: 600px) {
+        header {
+          height: 4em;
+        }
+        header h1 {
+          font-size: 1.2rem;
+        }
+        
       }
     </style>
-    <script src="script.js"></script>    
-</body>
+    
+  </head>
+  <body>
+    
+    <header>
+      <h1>Chat World Wide</h1>
+    </header>
+    
+    <div id="allb">
+      <div id="box">
+        <a id="b1" href="public.html">Public chat</a>
+        <a id="b2" href="rooms.html">Rooms</a>
+      </div>
+    </div>
+    
+ </body>
 </html>
