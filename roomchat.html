@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Room Chat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h2 id="roomTitle"></h2>
+</header>
+
+<div id="messages"></div>
+
+<div id="sendBox">
+  <input id="messageInput" placeholder="Type message">
+  <button onclick="sendMessage()">Send</button>
+</div>
+
+<button onclick="leaveRoom()">Leave</button>
+
+<script>
+  // 🔥 Firebase Config
+  const firebaseConfig = {
+    apiKey: "AIzaSyDZMYWXxl-W6tKvGF7aRrq8hcpg4TdE9I",
+    authDomain: "chatwleo.firebaseapp.com",
+    databaseURL: "https://chatwleo-default-rtdb.firebaseio.com",
+    projectId: "chatwleo",
+    storageBucket: "chatwleo.firebasestorage.app",
+    messagingSenderId: "616988584387",
+    appId: "1:616988584387:web:81b829019252d78cdd7576"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  // 👤 Get username
+  let username = localStorage.getItem("chatww_username");
+  if (!username) {
+    username = "Guest_" + Math.floor(Math.random() * 10000);
+    localStorage.setItem("chatww_username", username);
+  }
+
+  // 📍 Get room ID
+  const roomId = localStorage.getItem("chatww_room");
+  if (!roomId) {
+    alert("No room selected");
+    location.href = "rooms.html";
+  }
+
+  const roomTitle = document.getElementById("roomTitle");
+  const messagesDiv = document.getElementById("messages");
+  const messageInput = document.getElementById("messageInput");
+
+  roomTitle.textContent = "🌐 " + roomId.replace(/_/g, " ");
+  messageInput.focus();
+
+  // 🔄 Load Messages
+  db.ref("rooms/" + roomId + "/messages")
+    .limitToLast(100)
+    .on("child_added", snap => {
+      const msg = snap.val();
+      const div = document.createElement("div");
+      div.className = "msg";
+      div.innerHTML = `
+        <div class="name">${msg.user}</div>
+        <div>${msg.text}</div>
+      `;
+      messagesDiv.appendChild(div);
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    });
+
+  // ✉ Send message
+  window.sendMessage = () => {
+    const text = messageInput.value.trim();
+    if (!text) return;
+
+    db.ref("rooms/" + roomId + "/messages").push({
+      user: username,
+      text: text,
+      time: Date.now()
+    });
+
+    messageInput.value = "";
+    messageInput.focus();
+  };
+
+  // ⏎ Enter key to send
+  messageInput.addEventListener("keydown", e => {
+    if (e.key === "Enter") sendMessage();
+  });
+
+  // 🚪 Leave room
+  window.leaveRoom = () => {
+    localStorage.removeItem("chatww_room");
+    location.href = "rooms.html";
+  };
+</script>
+</body>
+</html>
