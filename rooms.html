@@ -1,67 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <title>Chatww</title>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
-    <!-- Basic Icons -->
-    <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style2.css">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat World Wide</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  </head>
-  <body>
-    <header>
-      <h1>Chat World Wide</h1>
-      <a id="home" href="index.html">
-        <i class="bx bx-home"></i>
-      </a>
-    </header>
-    
-    <nav>
-      <ul class="nav">
-        <li>
-          <a id="li1"href="#.html">Private Rooms</a>
-        </li>
-      </ul>
-    </nav>
-    
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+  <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 
+  <style>
+    .room {
+      display: block;
+      padding: 30px 100px;
+      margin: 10px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      transition: 0.2s;
+    }
 
-  <!-- Create room -->
-  <div id="createRoomBox">
-    <input id="roomName" placeholder="Room name">
-    <input id="roomPass" placeholder="Password" type="password">
-    <button onclick="createRoom()">Create Room</button>
+    .room:hover {
+      transform: scale(1.02);
+    }
+
+    .box {
+      text-align: center;
+    }
+
+    .btn {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #007BFF;
+      color: white;
+      border-radius: 5px;
+      display: inline-block;
+    }
+
+    /* POPUP */
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.3s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .popup:target {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .popup-content {
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 10px;
+      width: 300px;
+      text-align: center;
+      position: relative;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      text-decoration: none;
+      font-size: 25px;
+      color: #333;
+    }
+
+    input {
+      width: 90%;
+      margin: 10px 0;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #007BFF;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Chat World Wide</h1>
+    <a id="home" href="index.html">
+      <i class="bx bx-home"></i>
+    </a>
+  </header>
+
+  <!-- CREATE ROOM -->
+  <a href="#popup" class="room">
+    <div class="box">
+      <h3>+ Create Room</i></h3>
+    </div>
+  </a>
+
+  <div id="popup" class="popup">
+    <div class="popup-content">
+      <a href="#" class="close">&times;</a>
+      <h3>Enter Room Details</h3>
+      <input id="roomName" placeholder="Room Name">
+      <input id="roomPass" type="password" placeholder="Password">
+      <button onclick="createRoom()">Create</button>
+    </div>
   </div>
 
-  <!-- Room list -->
-  <div id="roomList"></div>
+  <!-- JOIN ROOM -->
+  <a href="#popup2" class="room">
+    <div class="box">
+      <h3>+  Join Room</h3>
+    </div>
+  </a>
+
+  <div id="popup2" class="popup">
+    <div class="popup-content">
+      <a href="#" class="close">&times;</a>
+      <h3>Join Room</h3>
+      <input id="joinRoomName" placeholder="Room Name">
+      <input id="joinRoomPass" type="password" placeholder="Password">
+      <button onclick="joinRoom()">Join</button>
+    </div>
+  </div>
   
-  <!-- Join existing room -->
-<div id="joinRoomBox">
-  <input id="joinRoomName" placeholder="Room name">
-  <input id="joinRoomPass" placeholder="Password" type="password">
-  <button onclick="joinExistingRoom()">Join Room</button>
-</div>
+  <script src="script2.js"></script>    
 
-
-  <!-- Chat (hidden first) -->
-  <div id="chatPage" style="display:none;">
-    <div id="messages"></div>
-
-    <input id="messageInput" placeholder="Type message">
-    <button onclick="sendMessage()">Send</button>
-
-    <button onclick="leaveRoom()">Leave</button>
-  </div>
-
-
-    <script src="script2.js"></script>    
 </body>
 </html>
